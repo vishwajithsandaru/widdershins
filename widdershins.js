@@ -107,6 +107,12 @@ async function doit(s) {
     var api = {};
     try {
         api = yaml.parse(s);
+
+        console.log(api.paths)
+        const {'/pet':pet, ...rest} = api.paths
+        // console.log(rest)
+        api.paths = rest
+        console.log(api)
     }
     catch (ex) {
         console.error('Failed to parse YAML/JSON, falling back to API Blueprint');
@@ -206,6 +212,7 @@ if (up.protocol && up.protocol.startsWith('http')) {
     .then(function (res) {
         return res.text();
     }).then(function (body) {
+        console.log(body)
         doit(body);
     }).catch(function (err) {
         console.error(err.message);
